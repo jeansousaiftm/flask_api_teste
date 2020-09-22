@@ -48,14 +48,14 @@ def novoPonto():
 		id_usuario = request.json.get("usuario", None)
 		data = request.json.get("data", None)
 		if not tipo:
-			return jsonify({ "erro": "Tipo de Batida inválido (Deve ser [E]ntrada ou [S]aída" }), 400
+			return jsonify({ "erro": "Tipo de Batida inválido (Deve ser [E]ntrada ou [S]aída)" }), 400
 		if tipo.lower() == "e" or tipo.lower() == "entrada":
 			usuario = Usuario.query.get(id_usuario)
 			if not usuario:
 				return jsonify({ "erro": "Usuário não existe no banco." }), 400
 			ponto = Ponto.query.filter(Ponto.usuario == id_usuario, Ponto.data_saida == None)
 			if ponto.count() == 0:
-				ponto = ponto_schema.load({ "usuario": id_usuario, "data_entrada": data })
+				ponto = ponto_schema.load({ "usuario": id_usuario, "data_entrada": data }, partial = ("data_saida",))
 				current_app.db.session.add(ponto)
 				current_app.db.session.commit()
 			else:
@@ -76,7 +76,7 @@ def novoPonto():
 			else:
 				return jsonify({ "erro": "Usuário não possui entrada registrada. Registre uma entrada antes de registrar uma nova saída." }), 400
 		else:
-			return jsonify({ "erro": "Tipo de Batida inválido (Deve ser [E]ntrada ou [S]aída" }), 400
+			return jsonify({ "erro": "Tipo de Batida inválido (Deve ser [E]ntrada ou [S]aída)" }), 400
 		return jsonify(ponto_schema.dump(ponto)), 200
 	except ValidationError as err: 
 		return jsonify({ "erro": str(err.messages) }), 400

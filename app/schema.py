@@ -78,3 +78,19 @@ class PontoSchema(ma.SQLAlchemyAutoSchema):
 		if Usuario.query.filter(Usuario.id == value).count() == 0:
 			raise ValidationError("Usuário não existe no banco")
 		return value
+		
+	@validates("data_entrada") 
+	def validatesDataEntrada(self, value):
+		if not value:
+			raise ValidationError("Data de Entrada obrigatória")
+		#if not validaData(value):
+			#raise ValidationError("Data de Entrada inválida")
+		return value
+		
+	@validates("data_saida") 
+	def validatesDataSaida(self, value):
+		if not value:
+			raise ValidationError("Data de Saída obrigatória")
+		#if not validaData(value):
+			#raise ValidationError("Data de Entrada inválida")
+		return value
