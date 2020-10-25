@@ -1,8 +1,8 @@
-# Teste
+# Test
 
 API de teste usando as bibliotecas Flask, SQLAlchemy, Marshmallow, Alembic e Mockito.
 
-## Uso
+## Use
 
 Após configurar a URL de conexão em app/__init.py__, realize os seguintes comandos:
 
